@@ -1,13 +1,9 @@
-const db = require("../db");
-
 class SoundController{
     async createSound(req, res){
-        //const sound = req.body;
+        const sound = req.body;
         // const newSound = await db.query("INSERT INTO sound (name, rait, blocked) VALUES ($1, $2, $3)", 
         //                                 [sound.name, sound.rait, sound.blocked]);
-
-        // console.log(sound);
-        // res.json("ok");
+        res.json(sound);
     }
     async getSounds(req, res){
         // res.json("ok")

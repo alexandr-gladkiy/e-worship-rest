@@ -1,5 +1,5 @@
 
-POST http://localhost:8888/api/v1/sound
+post http://localhost:8888/api/v1/sound
 Content-Type: application/json
 
 {
