@@ -7,4 +7,4 @@ const pool = new Pool({
     database: "SoundList"
 });
 
-module.export = pool;
+module.exports = pool;
