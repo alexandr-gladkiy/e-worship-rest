@@ -1,11 +1,35 @@
 
-get http://localhost:8888/api/v1/sounds
+# get http://localhost:8888/api/v1/sounds?orderby=desc:<fields1>,<fields2>,<fields3>;asc:<field>,<field>&filterfield=<field>:<value>;<field>:<value>;<field>:<alue>&likefield=<field>:<like>&limit=10
+# query params:
+# 
+# orderby = desc(<fields1>,<fields2>,<fields3>),asc()
+# filterfield = (<field>:<value>,<field>:<value>,<field>:<alue>....)
+# likefield = "(<field>:<like>,...)"
+# limit = 10
+
+//get http://localhost:8888/api/v1/sounds
+
+
+//get http://localhost:8888/api/v1/sound/0
+
+
+//delete http://localhost:8888/api/v1/sound/2
+
+put http://localhost:8888/api/v1/sound/0
+Content-Type: application/json
+
+{
+    "name": "Рыцарь славы",
+    "text": "Ты затмеваешь солнца свет...",
+    "reit": 5
+}
+
 
 post http://localhost:8888/api/v1/sound
 Content-Type: application/json
 
 {
-    "name": "dfsfgdhdfghfd"
-    //"rait": 2,
-    //"blocked": true
+    "name": "Рыцарь славы",
+    "text": "Жизнь во Христе имею. Жизнь во Христе имею. Он Царь царей, и Он живёт во мне.",
+    "reit": 1
 }
