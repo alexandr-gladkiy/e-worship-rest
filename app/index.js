@@ -1,6 +1,6 @@
 const express = require("express");
 const soundRouter = require("./cmp-Sound/route/sound.route")
-const testRouter = require("./cmp-Test/route/test.route")
+const tagRouter = require("./cmp-Tag/route/tag.route")
 
 const PORT = process.env.PORT || 8888;
 
@@ -9,6 +9,6 @@ const app = express();
 
 app.use(express.json());
 app.use(base_path_api, soundRouter);
-//app.use(base_path_api, testRouter);
+app.use(base_path_api, tagRouter);
 
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));

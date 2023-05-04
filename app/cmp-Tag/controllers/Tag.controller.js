@@ -1,36 +1,30 @@
 const { query } = require("express");
-const Sound = require("../model/Sound");
-const { Op } = require("sequelize");
-//const StatusType = require("../model/Types");
+const Test = require("../Model/Tag");
 
-class SoundController{
-    async createSound(req, res){
-        const sound = req.body;
+class Tag 
+{
+    async createTag(req, res){
+        const tag = req.body;
         //TODO: Move Code to lib functions
 
         try{
-            const newSound = await Sound.create({
-                                Name: sound.name,
-                                Description: sound.description || "",
-                                Text: sound.text || "",
-                                Reit: sound.reit || 0,
-                                Status: sound.status || 0, // Draft TODO: Rewrite for ENUM...
+            const newTag = await Tag.create({
+                                Name: Tag.name,
+                                Status: Tag.status || 0, // Draft TODO: Rewrite for ENUM...
                             })
              res.status(200).json({
                  status: true
              });
-
-         }catch(error){
+        
+        }catch(error){
             res.status(404).json({
                 status: false,
                 error: error.message 
             });
         }
-
     }
 
-    async getSounds(req, res){
-
+    async getTags(req, res){
         const query = req.query;
         
         //TODO: Validate existing keys in query, forming filters and order by
@@ -60,8 +54,8 @@ class SoundController{
             }
         });
 
-        Sound.sync({alter: true}).then(() => {
-            return Sound.findAll()
+        Tag.sync({alter: true}).then(() => {
+            return Tag.findAll()
         }).then((data) => {
             res.json(data);
         })
@@ -71,13 +65,12 @@ class SoundController{
                 error: error.message
             })
         }) 
-
     }
 
-    async getOneSound(req, res){
+    async getOneTag(req, res){
         
-        Sound.sync({alter: true}).then(() => {
-            return Sound.findOne({
+        Tag.sync({alter: true}).then(() => {
+            return Tag.findOne({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -89,18 +82,16 @@ class SoundController{
                 error: error.message
             })
         }) 
+
     }
 
-    async updateSound(req, res){
+    async updateTag(req, res){
         
-        Sound.sync({alter: true}).then(() => {
-            return Sound.update(
+        Tag.sync({alter: true}).then(() => {
+            return Tag.update(
                 {
-                    Name: sound.name,
-                    Description: sound.description || "",
-                    Text: sound.text || "",
-                    Reit: sound.reit || 0,
-                    Status: sound.status || 0 // Draft TODO: Rewrite for ENUM...
+                    Name: tag.name,
+                    Status: tag.status || 0 // Draft TODO: Rewrite for ENUM...
                 },
                 {
                     where:{Id: req.params.id}
@@ -115,11 +106,13 @@ class SoundController{
                 error: error.message
             })
         }) 
+
     }
-    async deleteSound(req, res){
+
+    async deleteTag(req, res){
         
         Sound.sync({alter: true}).then(() => {
-            return Sound.destroy({
+            return Tag.destroy({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -131,8 +124,6 @@ class SoundController{
                 error: error.message
             })
         }) 
+
     }
-
 }
-
-module.exports = new SoundController();
