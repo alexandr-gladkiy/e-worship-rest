@@ -1,6 +1,6 @@
 const Router = require('express');
 const router = new Router();
-const soundController = require('../controller/sound.controller');
+const soundController = require('./controller')
 
 router.post('/sound', soundController.createSound);
 router.get('/sounds', soundController.getSounds);
