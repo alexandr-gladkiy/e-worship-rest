@@ -1,7 +1,7 @@
 const { query } = require("express");
-const Sound = require("../model/Sound");
+const Sound = require("./model");
 const { Op } = require("sequelize");
-//const StatusType = require("../model/Types");
+const helper = require("../Common/helpers");
 
 class SoundController{
     async createSound(req, res){
@@ -34,19 +34,20 @@ class SoundController{
         const query = req.query;
         
         //TODO: Validate existing keys in query, forming filters and order by
-        //const filterFields = query.filterfield.split(";");
-        let filterFields = [];
-        let likeFields = [];
-
+        const filter_fields = {
+            where:{},
+        };
+        
         const query_keys = Object.keys(query);
-        query_keys.forEach((query_key) => {
-            switch(query_key){
+        query_keys.forEach((key) => {
+            switch(key){
                 case 'orderby':{
                     // TODO: Create and Call function for OrderBy
                     break;
                 }; 
                 case 'filterfield':{
                     // TODO: Create and Call function for filterfield
+                    //filter_fields.where = helper.ParseRequestValue(query[key]);
                     break;
                 };
                 case 'likefield':{
@@ -61,7 +62,7 @@ class SoundController{
         });
 
         Sound.sync({alter: true}).then(() => {
-            return Sound.findAll()
+            return Sound.findAll( filter_fields )
         }).then((data) => {
             res.json(data);
         })
