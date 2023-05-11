@@ -1,5 +1,5 @@
 const { query } = require("express");
-const Sound = require("./model");
+const Sound = require("./sound.model");
 const { Op } = require("sequelize");
 const helper = require("../Common/helpers");
 
