@@ -2,7 +2,7 @@
 const { DataTypes } = require("sequelize");
 const db = require("../../db_orm");
 
-const Sound = db.define('Sound', 
+const User = db.define('Sound', 
 {
     Id: {
         type: DataTypes.INTEGER,
@@ -10,24 +10,34 @@ const Sound = db.define('Sound',
         autoIncrement: true,
         allowNull: false
     },
+
+    Login:{
+        type: DataTypes.STRING,
+        allowNull: false
+    },
     
-    Name:{
+    First_Name:{
         type: DataTypes.STRING,
         allowNull: false
     },
 
-    Description: {
+    Middle_Name:{
         type: DataTypes.STRING,
         allowNull: false
     },
 
-    Text: {
-        type: DataTypes.TEXT,
+    Last_Name:{
+        type: DataTypes.STRING,
         allowNull: false
     },
 
-    Reit: {
-        type: DataTypes.INTEGER,
+    Email: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+
+    Phone: {
+        type: DataTypes.STRING,
         allowNull: false
     },
 
@@ -38,4 +48,4 @@ const Sound = db.define('Sound',
 
 });
 
-module.exports = Sound;
+module.exports = User;
