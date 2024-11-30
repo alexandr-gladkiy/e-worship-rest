@@ -1,20 +1,22 @@
 const { query } = require("express");
-const Sound = require("./models");
+const User = require("./models");
 const { Op } = require("sequelize");
 const helper = require("../Common/helpers");
 
-class SoundController{
-    async createSound(req, res){
-        const sound = req.body;
+class UserController{
+    async createUser(req, res){
+        const user = req.body;
         //TODO: Move Code to lib functions
 
         try{
-            const newSound = await Sound.create({
-                                Name: sound.name,
-                                Description: sound.description || "",
-                                Text: sound.text || "",
-                                Reit: sound.reit || 0,
-                                Status: sound.status || 0, // Draft TODO: Rewrite for ENUM...
+            const newUser = await User.create({
+                                Login: user.name,
+                                Email: user.email,
+                                Phone: user.phone,
+                                First_Name: user.firstName || "",
+                                Middle_Name: user.middleName || "",
+                                Last_Name: user.lastName || "",
+                                Status: user.status || 0, // Draft TODO: Rewrite for ENUM...
                             })
              res.status(200).json({
                  status: true
@@ -28,7 +30,7 @@ class SoundController{
 
     }
 
-    async getSounds(req, res){
+    async getUser(req, res){
 
         const query = req.query;
         
@@ -60,8 +62,8 @@ class SoundController{
             }
         });
 
-        Sound.sync({alter: true}).then(() => {
-            return Sound.findAll( filter_fields )
+        User.sync({alter: true}).then(() => {
+            return User.findAll( filter_fields )
         }).then((data) => {
             res.json(data);
         })
@@ -74,10 +76,10 @@ class SoundController{
 
     }
 
-    async getOneSound(req, res){
+    async getOneUser(req, res){
         
-        Sound.sync({alter: true}).then(() => {
-            return Sound.findOne({
+        User.sync({alter: true}).then(() => {
+            return User.findOne({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -91,16 +93,18 @@ class SoundController{
         }) 
     }
 
-    async updateSound(req, res){
+    async updateUser(req, res){
         
-        Sound.sync({alter: true}).then(() => {
-            return Sound.update(
+        User.sync({alter: true}).then(() => {
+            return User.update(
                 {
-                    Name: sound.name,
-                    Description: sound.description || "",
-                    Text: sound.text || "",
-                    Reit: sound.reit || 0,
-                    Status: sound.status || 0 // Draft TODO: Rewrite for ENUM...
+                    Login: user.name,
+                    Email: user.email,
+                    Phone: user.phone,
+                    First_Name: user.firstName || "",
+                    Middle_Name: user.middleName || "",
+                    Last_Name: user.lastName || "",
+                    Status: user.status || 0, // Draft TODO: Rewrite for ENUM...
                 },
                 {
                     where:{Id: req.params.id}
@@ -116,10 +120,10 @@ class SoundController{
             })
         }) 
     }
-    async deleteSound(req, res){
+    async deleteUser(req, res){
         
-        Sound.sync({alter: true}).then(() => {
-            return Sound.destroy({
+        User.sync({alter: true}).then(() => {
+            return User.destroy({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -135,4 +139,4 @@ class SoundController{
 
 }
 
-module.exports = new SoundController();
+module.exports = new UserController();
