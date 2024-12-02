@@ -4,7 +4,7 @@ const { Op } = require("sequelize");
 const helper = require("../Common/helpers");
 
 class EventController{
-    async createSound(req, res){
+    async createEvent(req, res){
         const event = req.body;
         //TODO: Move Code to lib functions
 
@@ -26,7 +26,7 @@ class EventController{
 
     }
 
-    async getEventList(req, res){
+    async getEvents(req, res){
 
         const query = req.query;
         
@@ -72,7 +72,7 @@ class EventController{
 
     }
 
-    async getSoundEvent(req, res){
+    async getOneEvent(req, res){
         
         Event.sync({alter: true}).then(() => {
             return Event.findOne({
