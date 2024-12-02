@@ -7,11 +7,11 @@ post {{base_url}}/{{version}}/user
 Content-Type: application/json
 
 {
-    "Login": "AlexG",
-    "Email": "sane4ek2002@gmail.com",
-    "Phone": "+79604492320",
-    "First_Name": "Alexandr",
-    "Middle_Name": "Petrovich",
-    "Last_Name": "Gladkiy",
-    "Status": 0
+    "login": "AlexG",
+    "email": "sane4ek2002@gmail.com",
+    "phone": "+79604492320",
+    "firstName": "Alexandr",
+    "middleName": "Petrovich",
+    "lastName": "Gladkiy",
+    "status": 0
 }

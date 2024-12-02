@@ -1,16 +1,21 @@
 const { query } = require("express");
 const User = require("../models/user_model");
-const { Op } = require("sequelize");
-//const helper = require("../Common/helpers");
 
 class UserController{
+    constructor(){
+        User.sync({force: true}).then(result=>{
+            console.log(result);
+        })
+        .catch(err=> console.log(err));
+    }
+
     async createUser(req, res){
         const user = req.body;
         //TODO: Move Code to lib functions
 
         try{
             const newUser = await User.create({
-                                Login: user.name,
+                                Login: user.login,
                                 Email: user.email,
                                 Phone: user.phone,
                                 First_Name: user.firstName || "",

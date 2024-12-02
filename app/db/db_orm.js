@@ -14,7 +14,11 @@ const pool = new Sequilize(db_name, db_user, db_password, {
         min: 0,
         acquire: 3000,
         idle: 10000
-  }
+    },
+    define: {
+      freeTableName: true,
+      sync: {force: true}
+    },
 });
 
 module.exports = pool;
