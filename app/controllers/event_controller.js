@@ -1,18 +1,18 @@
 const { query } = require("express");
-const UserGroup = require("./models");
+const Event = require("../models/event_model");
 const { Op } = require("sequelize");
-const helper = require("../Common/helpers");
+//const helper = require("../helpers/helpers");
 
-class UserGroupController{
-    async createUserGroup(req, res){
-        const userGroup = req.body;
+class EventController{
+    async createEvent(req, res){
+        const event = req.body;
         //TODO: Move Code to lib functions
 
         try{
-            const newUserGroup = await UserGroup.create({
-                                Name: userGroup.name,
-                                Description: userGroup.description || "",
-                                Status: userGroup.status || 0, // Draft TODO: Rewrite for ENUM...
+            const newEvent = await Event.create({
+                                Name: event.name,
+                                Description: event.description || "",
+                                Status: event.status || 0, // Draft TODO: Rewrite for ENUM...
                             })
              res.status(200).json({
                  status: true
@@ -26,7 +26,7 @@ class UserGroupController{
 
     }
 
-    async getUserGroups(req, res){
+    async getEvents(req, res){
 
         const query = req.query;
         
@@ -58,8 +58,8 @@ class UserGroupController{
             }
         });
 
-        UserGroup.sync({alter: true}).then(() => {
-            return UserGroup.findAll( filter_fields )
+        Event.sync({alter: true}).then(() => {
+            return Event.findAll( filter_fields )
         }).then((data) => {
             res.json(data);
         })
@@ -72,10 +72,10 @@ class UserGroupController{
 
     }
 
-    async getOneUserGroup(req, res){
+    async getOneEvent(req, res){
         
-        UserGroup.sync({alter: true}).then(() => {
-            return UserGroup.findOne({
+        Event.sync({alter: true}).then(() => {
+            return Event.findOne({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -89,14 +89,14 @@ class UserGroupController{
         }) 
     }
 
-    async updateUserGroup(req, res){
-        const userGroup = req.body;
-        UserGroup.sync({alter: true}).then(() => {
-            return SoundList.update(
+    async updateEvent(req, res){
+        const event = req.body;
+        Event.sync({alter: true}).then(() => {
+            return Event.update(
                 {
-                    Name: userGroup.name,
-                    Description: userGroup.description || "",
-                    Status: userGroup.status || 0 // Draft TODO: Rewrite for ENUM...
+                    Name: event.name,
+                    Description: event.description || "",
+                    Status: event.status || 0 // Draft TODO: Rewrite for ENUM...
                 },
                 {
                     where:{Id: req.params.id}
@@ -112,10 +112,10 @@ class UserGroupController{
             })
         }) 
     }
-    async deleteUserGroup(req, res){
+    async deleteEvent(req, res){
         
-        UserGroup.sync({alter: true}).then(() => {
-            return UserGroup.destroy({
+        Event.sync({alter: true}).then(() => {
+            return Event.destroy({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -131,4 +131,4 @@ class UserGroupController{
 
 }
 
-module.exports = new UserGroupController();
+module.exports = new EventController();

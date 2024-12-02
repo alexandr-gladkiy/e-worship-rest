@@ -2,7 +2,7 @@
 const { DataTypes } = require("sequelize");
 const db = require("../db/db_orm");
 
-const Event = db.define('Sound', 
+const Event = db.define('Event', 
 {
     Id: {
         type: DataTypes.INTEGER,

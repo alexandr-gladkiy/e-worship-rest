@@ -1,18 +1,18 @@
 const { query } = require("express");
-const Event = require("./models");
+const SoundList = require("../models/soundList_model");
 const { Op } = require("sequelize");
-const helper = require("../Common/helpers");
+//const helper = require("../Common/helpers");
 
-class EventController{
-    async createEvent(req, res){
-        const event = req.body;
+class SoundController{
+    async createSoundList(req, res){
+        const soundList = req.body;
         //TODO: Move Code to lib functions
 
         try{
-            const newEvent = await Event.create({
-                                Name: event.name,
-                                Description: event.description || "",
-                                Status: event.status || 0, // Draft TODO: Rewrite for ENUM...
+            const newSoundList = await SoundList.create({
+                                Name: soundList.name,
+                                Description: soundList.description || "",
+                                Status: soundList.status || 0, // Draft TODO: Rewrite for ENUM...
                             })
              res.status(200).json({
                  status: true
@@ -26,7 +26,7 @@ class EventController{
 
     }
 
-    async getEvents(req, res){
+    async getSoundLists(req, res){
 
         const query = req.query;
         
@@ -58,8 +58,8 @@ class EventController{
             }
         });
 
-        Event.sync({alter: true}).then(() => {
-            return Event.findAll( filter_fields )
+        SoundList.sync({alter: true}).then(() => {
+            return SoundList.findAll( filter_fields )
         }).then((data) => {
             res.json(data);
         })
@@ -72,10 +72,10 @@ class EventController{
 
     }
 
-    async getOneEvent(req, res){
+    async getOneSoundList(req, res){
         
-        Event.sync({alter: true}).then(() => {
-            return Event.findOne({
+        SoundList.sync({alter: true}).then(() => {
+            return SoundList.findOne({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -89,14 +89,14 @@ class EventController{
         }) 
     }
 
-    async updateEvent(req, res){
-        const event = req.body;
-        Event.sync({alter: true}).then(() => {
-            return Event.update(
+    async updateSoundList(req, res){
+        const soundList = req.body;
+        SoundList.sync({alter: true}).then(() => {
+            return SoundList.update(
                 {
-                    Name: event.name,
-                    Description: event.description || "",
-                    Status: event.status || 0 // Draft TODO: Rewrite for ENUM...
+                    Name: soundList.name,
+                    Description: soundList.description || "",
+                    Status: soundList.status || 0 // Draft TODO: Rewrite for ENUM...
                 },
                 {
                     where:{Id: req.params.id}
@@ -112,10 +112,10 @@ class EventController{
             })
         }) 
     }
-    async deleteEvent(req, res){
+    async deleteSoundList(req, res){
         
-        Event.sync({alter: true}).then(() => {
-            return Event.destroy({
+        SoundList.sync({alter: true}).then(() => {
+            return SoundList.destroy({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -131,4 +131,4 @@ class EventController{
 
 }
 
-module.exports = new EventController();
+module.exports = new SoundController();

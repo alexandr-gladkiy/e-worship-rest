@@ -1,20 +1,18 @@
 const { query } = require("express");
-const Sound = require("./models");
+const UserGroup = require("../models/userGroup_model");
 const { Op } = require("sequelize");
-const helper = require("../Common/helpers");
+//const helper = require("../Common/helpers");
 
-class SoundController{
-    async createSound(req, res){
-        const sound = req.body;
+class UserGroupController{
+    async createUserGroup(req, res){
+        const userGroup = req.body;
         //TODO: Move Code to lib functions
 
         try{
-            const newSound = await Sound.create({
-                                Name: sound.name,
-                                Description: sound.description || "",
-                                Text: sound.text || "",
-                                Reit: sound.reit || 0,
-                                Status: sound.status || 0, // Draft TODO: Rewrite for ENUM...
+            const newUserGroup = await UserGroup.create({
+                                Name: userGroup.name,
+                                Description: userGroup.description || "",
+                                Status: userGroup.status || 0, // Draft TODO: Rewrite for ENUM...
                             })
              res.status(200).json({
                  status: true
@@ -28,7 +26,7 @@ class SoundController{
 
     }
 
-    async getSounds(req, res){
+    async getUserGroups(req, res){
 
         const query = req.query;
         
@@ -60,8 +58,8 @@ class SoundController{
             }
         });
 
-        Sound.sync({alter: true}).then(() => {
-            return Sound.findAll( filter_fields )
+        UserGroup.sync({alter: true}).then(() => {
+            return UserGroup.findAll( filter_fields )
         }).then((data) => {
             res.json(data);
         })
@@ -74,10 +72,10 @@ class SoundController{
 
     }
 
-    async getOneSound(req, res){
+    async getOneUserGroup(req, res){
         
-        Sound.sync({alter: true}).then(() => {
-            return Sound.findOne({
+        UserGroup.sync({alter: true}).then(() => {
+            return UserGroup.findOne({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -91,16 +89,14 @@ class SoundController{
         }) 
     }
 
-    async updateSound(req, res){
-        
-        Sound.sync({alter: true}).then(() => {
-            return Sound.update(
+    async updateUserGroup(req, res){
+        const userGroup = req.body;
+        UserGroup.sync({alter: true}).then(() => {
+            return SoundList.update(
                 {
-                    Name: sound.name,
-                    Description: sound.description || "",
-                    Text: sound.text || "",
-                    Reit: sound.reit || 0,
-                    Status: sound.status || 0 // Draft TODO: Rewrite for ENUM...
+                    Name: userGroup.name,
+                    Description: userGroup.description || "",
+                    Status: userGroup.status || 0 // Draft TODO: Rewrite for ENUM...
                 },
                 {
                     where:{Id: req.params.id}
@@ -116,10 +112,10 @@ class SoundController{
             })
         }) 
     }
-    async deleteSound(req, res){
+    async deleteUserGroup(req, res){
         
-        Sound.sync({alter: true}).then(() => {
-            return Sound.destroy({
+        UserGroup.sync({alter: true}).then(() => {
+            return UserGroup.destroy({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -135,4 +131,4 @@ class SoundController{
 
 }
 
-module.exports = new SoundController();
+module.exports = new UserGroupController();

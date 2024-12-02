@@ -1,6 +1,6 @@
 const Router = require('express');
 const soundListRouter = new Router();
-const soundListController = require('../controllers/soundList.controller');
+const soundListController = require('../controllers/soundList_controller');
 
 soundListRouter.post('/sound_list', soundListController.createSoundList);
 soundListRouter.get('/sound_lists', soundListController.getSoundLists);

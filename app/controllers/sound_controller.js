@@ -1,18 +1,20 @@
 const { query } = require("express");
-const SoundList = require("./models");
+const Sound = require("../models/sound_model");
 const { Op } = require("sequelize");
-const helper = require("../Common/helpers");
+//const helper = require("../Common/helpers");
 
 class SoundController{
-    async createSoundList(req, res){
-        const soundList = req.body;
+    async createSound(req, res){
+        const sound = req.body;
         //TODO: Move Code to lib functions
 
         try{
-            const newSoundList = await SoundList.create({
-                                Name: soundList.name,
-                                Description: soundList.description || "",
-                                Status: soundList.status || 0, // Draft TODO: Rewrite for ENUM...
+            const newSound = await Sound.create({
+                                Name: sound.name,
+                                Description: sound.description || "",
+                                Text: sound.text || "",
+                                Reit: sound.reit || 0,
+                                Status: sound.status || 0, // Draft TODO: Rewrite for ENUM...
                             })
              res.status(200).json({
                  status: true
@@ -26,7 +28,7 @@ class SoundController{
 
     }
 
-    async getSoundLists(req, res){
+    async getSounds(req, res){
 
         const query = req.query;
         
@@ -58,8 +60,8 @@ class SoundController{
             }
         });
 
-        SoundList.sync({alter: true}).then(() => {
-            return SoundList.findAll( filter_fields )
+        Sound.sync({alter: true}).then(() => {
+            return Sound.findAll( filter_fields )
         }).then((data) => {
             res.json(data);
         })
@@ -72,10 +74,10 @@ class SoundController{
 
     }
 
-    async getOneSoundList(req, res){
+    async getOneSound(req, res){
         
-        SoundList.sync({alter: true}).then(() => {
-            return SoundList.findOne({
+        Sound.sync({alter: true}).then(() => {
+            return Sound.findOne({
                 where:{Id: req.params.id}
             })
         }).then((data) => {
@@ -89,14 +91,16 @@ class SoundController{
         }) 
     }
 
-    async updateSoundList(req, res){
-        const soundList = req.body;
-        SoundList.sync({alter: true}).then(() => {
-            return SoundList.update(
+    async updateSound(req, res){
+        
+        Sound.sync({alter: true}).then(() => {
+            return Sound.update(
                 {
-                    Name: soundList.name,
-                    Description: soundList.description || "",
-                    Status: soundList.status || 0 // Draft TODO: Rewrite for ENUM...
+                    Name: sound.name,
+                    Description: sound.description || "",
+                    Text: sound.text || "",
+                    Reit: sound.reit || 0,
+                    Status: sound.status || 0 // Draft TODO: Rewrite for ENUM...
                 },
                 {
                     where:{Id: req.params.id}
@@ -112,10 +116,10 @@ class SoundController{
             })
         }) 
     }
-    async deleteSoundList(req, res){
+    async deleteSound(req, res){
         
-        SoundList.sync({alter: true}).then(() => {
-            return SoundList.destroy({
+        Sound.sync({alter: true}).then(() => {
+            return Sound.destroy({
                 where:{Id: req.params.id}
             })
         }).then((data) => {

@@ -1,8 +1,8 @@
 // Db
 const { DataTypes } = require("sequelize");
-const db = require("../../db_orm");
+const db = require("../db/db_orm");
 
-const User = db.define('Sound', 
+const User = db.define('User', 
 {
     Id: {
         type: DataTypes.INTEGER,

@@ -1,7 +1,7 @@
 const { query } = require("express");
-const User = require("./models");
+const User = require("../models/user_model");
 const { Op } = require("sequelize");
-const helper = require("../Common/helpers");
+//const helper = require("../Common/helpers");
 
 class UserController{
     async createUser(req, res){
@@ -30,7 +30,7 @@ class UserController{
 
     }
 
-    async getUser(req, res){
+    async getUsers(req, res){
 
         const query = req.query;
         

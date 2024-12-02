@@ -32,12 +32,10 @@ get http://localhost:8888/api/v1/sounds?filterfield=id:-2|name:like(a%)
 #     "reit": 5
 # }
 
-
-post http://localhost:8888/api/v1/sound
+###
+post http://localhost:8888/api/v1/user
 Content-Type: application/json
 
 {
-    "name": "asdgasdfgsdfga",
-    "text": "Жизнь во Христе имею. Жизнь во Христе имею. Он Царь царей, и Он живёт во мне.",
-    "reit": 1
+    "first_name": "Alex Gladkiy"
 }

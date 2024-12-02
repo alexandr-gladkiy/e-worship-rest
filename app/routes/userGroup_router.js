@@ -1,6 +1,6 @@
 const Router = require('express');
 const userGroupRouter = new Router();
-const userGroupController = require('../controllers/userGroup.controller');
+const userGroupController = require('../controllers/userGroup_controller');
 
 userGroupRouter.post('/userGroup', userGroupController.createUserGroup);
 userGroupRouter.get('/userGroups', userGroupController.getUserGroups);
