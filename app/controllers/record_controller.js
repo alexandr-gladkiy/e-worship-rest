@@ -1,5 +1,6 @@
 
-class MainController{
+
+class RecordController{
     data = {};
     filters = {};
     responseData = {
@@ -7,16 +8,15 @@ class MainController{
         message: {}
     };
     
-    async createRecord(model, data={}){
+    async function createRecord(model, data={}){
         this.data = data;
 
         try{
             model.sync({alter: true});
-            const newRecord = await model.create(this.data);
-            this.setResponseStatusOk(newRecord.data);
+            const result = await model.create(this.data);
+            this.setResponseStatusOk(result.data);
         }catch(error){
             this.setResponseStatusError({
-                status: false,
                 error: error.message
             });
         }
@@ -27,11 +27,10 @@ class MainController{
 
         try{
             model.sync({alter: true});
-            responseMessage = model.findAll(this.filters).data;
-            this.setResponseStatusOk(responseMessage);
+            const result = await model.findAll(this.filters);
+            this.setResponseStatusOk(result.data);
         }catch(error){
             this.setResponseStatusError({
-                status: false,
                 error: error.message
             });
         }
@@ -42,42 +41,39 @@ class MainController{
 
         try{
             model.sync({alter: true});
-            responseMessage = model.findAll(this.filters).data;
-            this.setResponseStatusOk(responseMessage);
+            const result = await model.findAll(this.filters);
+            this.setResponseStatusOk(result.data);
         }catch(error){
             this.setResponseStatusError({
-                status: false,
                 error: error.message
             });
         }
     }
 
-    async updateRecords(model, data={}, filters={}){
+    async updateRecord(model, data={}, filters={}){
         this.filters = filters;
         this.data - data;
 
         try{
             model.sync({alter: true});
-            responseMessage = model.update(this.data, this.filters).data;
-            this.setResponseStatusOk(responseMessage);
+            const result = await model.update(this.data, this.filters);
+            this.setResponseStatusOk(result.data);
         }catch(error){
             this.setResponseStatusError({
-                status: false,
                 error: error.message
             });
         }    
     }
 
-    async deleteRecords(model, filters={}){
+    async deleteRecord(model, filters={}){
         this.filters = filters;
         
         try{
             model.sync({alter: true});
-            responseMessage = model.destroy(this.filters).data;
-            this.setResponseStatusOk(responseMessage);
+            const result = await model.destroy(this.filters).data;
+            this.setResponseStatusOk(result.data);
         }catch(error){
             this.setResponseStatusError({
-                status: false,
                 error: error.message
             });
         }
@@ -100,7 +96,6 @@ class MainController{
         this.responseData.status = 404;
         this.responseData.message = responseMessage;
     }
-
 }
 
-module.exports = new MainController();
+module.exports.RecordController = RecordController;

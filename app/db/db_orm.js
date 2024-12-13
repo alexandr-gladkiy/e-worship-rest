@@ -17,7 +17,7 @@ const pool = new Sequilize(db_name, db_user, db_password, {
     },
     define: {
       freeTableName: true,
-      sync: {force: true}
+      sync: {alter: true}
     },
 });
 

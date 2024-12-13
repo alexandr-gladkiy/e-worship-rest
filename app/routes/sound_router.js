@@ -9,3 +9,8 @@ soundRouter.put('/sound/:id', soundController.updateSound);
 soundRouter.delete('/sound/:id', soundController.deleteSound);
 
 module.exports = soundRouter;
+
+soundRouter.post('/sound', (req, res)=>{
+
+
+})

@@ -1,60 +1,64 @@
 const { query } = require("express");
-const MainController = require("./main_controller");
-const User = require("../models/user_model");
+const { RecordController } = require("./record_controller");
+const UserModel = require("../models/user_model");
 
-class UserController extends MainController{
-    async createUser(req, res){
-        const user = req.body;
-        data = this.getDataFromRequestBody(req.body);
-        this.createRecord(User, data);
-        res.status(this.getStatus()).json(this.getMessage());
+class UserController{
+    
+
+    async create(req, res){
+        data = getDataFromRequestBody(req.body);
+        const record = new RecordController();
+        record.create(UserModel, data);
+        res.status(this.record.getStatus()).json(this.record.getMessage());
     }
 
-    async getUsers(req, res){
+    async getList(req, res){
+        //res.status(200).json(UserModel.findAll({}).data);
+        
+        let filters = this.getFilterFromQueryString(req.query);
+        this.record.getList(UserModel, filters);
+        res.status(this.record.getStatus()).json(this.record.getMessage());
+    }
+
+    async getOne(req, res){
         filters = this.getFilterFromQueryString(req.query);
-        this.getRecords(User, filters);
-        res.status(this.getStatus()).json(this.getMessage());
+        this.record.getOne(UserModel, filters);
+        res.status(this.record.getStatus()).json(this.record.getMessage());
     }
 
-    async getOneUser(req, res){
-        filters = this.getFilterFromQueryString(req.query);
-        this.getOneRecord(User, filters);
-        res.status(this.getStatus()).json(this.getMessage());
-    }
-
-    async updateUser(req, res){
+    async update(req, res){
         const user = req.body;
         data = this.getDataFromRequestBody(req.body);
         filter = {where:{Id: req.params.id}}
-        this.updateRecords(User, data, filter);
-        res.status(this.getStatus()).json(this.getMessage()); 
+        this.record.update(UserModel, data, filter);
+        res.status(this.record.getStatus()).json(this.record.getMessage()); 
     }
 
-    async deleteUser(req, res){
+    async delete(req, res){
         filter = {where:{Id: req.params.id}};
-        this.deleteRecords(User, filter);
-        res.status(this.getStatus()).json(this.getMessage());
+        this.record.delete(UserModel, filter);
+        res.status(this.record.getStatus()).json(this.record.getMessage());
     }
 
 }
 
-UserController.prototype.getDataFromRequestBody = function(body){
+function getDataFromRequestBody(body={}){
     data = {};
-        
-    for (key in keys(body)){
+    Object.keys(body).forEach((key)=>{
         switch(key){
-            case 'login': data.append('Login', body[key]);
-            case 'email': data.append('Email', body[key]);
-            case 'phone': data.append('Phone', body[key]);
-            case 'firstName': data.append('First_Name', body[key]);
-            case 'middleName': data.append('Middle_Name', body[key]);
-            case 'lastName': data.append('Last_Name', body[key]);
-            case 'status': data.append('Status', body[key]);
+            case 'login': data['Login'] = body[key];
+            case 'email': data['Email'] = body[key];
+            case 'phone': data['Phone'] = body[key];
+            case 'firstName': data['First_Name'] = body[key];
+            case 'middleName': data['Middle_Name'] = body[key];
+            case 'lastName': data['Last_Name'] = body[key];
+            case 'status': data['Status'] = body[key];
         }
-    }
+    });
+    return data;
 }
 
-UserController.prototype.getFilterFromQueryString = function(queryString){
+function getFilterFromQueryString(queryString = {}){
     const filter_fields = {
         where:{},
     };
@@ -81,7 +85,7 @@ UserController.prototype.getFilterFromQueryString = function(queryString){
             };
         }
     });
-
+    return filter_fields;
 }
 
 module.exports = new UserController();

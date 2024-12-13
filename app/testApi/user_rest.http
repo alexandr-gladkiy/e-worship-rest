@@ -15,3 +15,7 @@ Content-Type: application/json
     "lastName": "Gladkiy",
     "status": 0
 }
+
+### Get user list
+get {{base_url}}/{{version}}/users
+Content-Type: application/json
